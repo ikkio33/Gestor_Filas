@@ -1,0 +1,46 @@
+    /* Contenedor de los turnos */
+    .turnos-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: start;
+        gap: 1rem;
+        margin-top: 20px;
+    }
+
+    /* Estilo individual para cada turno */
+    .turno {
+        background-color: #f8f9fa;
+        border: 1px solid #dee2e6;
+        border-radius: 8px;
+        padding: 15px;
+        width: 220px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        transition: transform 0.2s ease;
+    }
+
+    .turno:hover {
+        transform: scale(1.05);
+    }
+
+    /* Título del turno */
+    .turno-title {
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: #007bff;
+    }
+
+    /* Asegurar que los turnos se acomoden bien en pantallas más pequeñas */
+    @media (max-width: 768px) {
+        .turno {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+    }
+
+    /* Ajustar el tamaño de texto en pantallas más pequeñas */
+    @media (max-width: 576px) {
+        .turno-title {
+            font-size: 1rem;
+        }
+    }

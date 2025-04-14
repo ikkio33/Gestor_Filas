@@ -1,0 +1,44 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin-right: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table,
+th,
+td {
+    border: 1px solid #ddd;
+}
+
+th,
+td {
+    padding: 8px;
+    text-align: left;
+}
+/**/
+.servicio-dropzone {
+    min-height: 150px;
+    transition: background-color 0.2s ease;
+}
+
+.servicio-dropzone.over {
+    background-color: #e3f2fd;
+    border: 2px dashed #2196f3;
+}
+
+.list-group-item[draggable="true"] {
+    cursor: move;
+}
