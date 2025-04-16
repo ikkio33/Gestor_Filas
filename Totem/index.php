@@ -1,33 +1,63 @@
 <?php
-$ocultarNavbar = true;
-include '../includes/header.php';
+$titulo = "Ingreso de RUT";
+include '../includes/layout_Totem.php';
 ?>
 
-<div class="container text-center mt-5">
-    <h2>Ingrese su RUT</h2>
-    <form action="seleccionar.php" method="POST" id="rutForm">
-        <input type="text" name="rut" id="rut" class="form-control form-control-lg text-center mb-3" placeholder="Ej: 12345678-K" required readonly>
-        <div class="d-grid gap-2 d-md-block">
-            <?php
-            $teclas = array_merge(range(1, 9), ['K', 0, '-']);
-            foreach ($teclas as $valor) {
-                echo "<button type='button' class='btn btn-secondary m-1' onclick=\"agregar('$valor')\">$valor</button>";
-            }
-            ?>
-            <button type="button" class="btn btn-warning m-1" onclick="borrar()">←</button>
-            <button type="submit" class="btn btn-success m-1">Continuar</button>
+<style>
+    .touch-keyboard {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+    }
+
+    .touch-keyboard button {
+        padding: 1.5rem;
+        font-size: 2rem;
+        touch-action: manipulation;
+        user-select: none;
+    }
+</style>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8 col-lg-6">
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-primary text-white text-center">
+                    <h4>Ingrese su RUT</h4>
+                </div>
+                <div class="card-body">
+                    <form action="seleccionar.php" method="POST" id="rutForm">
+                        <div class="mb-4">
+                            <input type="text" name="rut" id="rut" class="form-control form-control-lg text-center" placeholder="Ej: 12345678-K" required readonly>
+                        </div>
+
+                        <div class="touch-keyboard">
+                            <?php
+                            $teclas = array_merge(range(1, 9), ['K', 0, '-']);
+                            foreach ($teclas as $valor) {
+                                echo "<button type='button' class='btn btn-outline-secondary' onclick=\"agregar('$valor')\">$valor</button>";
+                            }
+                            ?>
+                            <button type="button" class="btn btn-outline-warning" onclick="borrar()">←</button>
+                            <button type="submit" class="btn btn-primary">Continuar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
-    </form>
+    </div>
 </div>
 
 <script>
     function agregar(valor) {
-        document.getElementById('rut').value += valor;
+        const input = document.getElementById('rut');
+        input.value += valor;
     }
+
     function borrar() {
-        let rut = document.getElementById('rut');
-        rut.value = rut.value.slice(0, -1);
+        const input = document.getElementById('rut');
+        input.value = input.value.slice(0, -1);
     }
 </script>
 
-<?php include '../includes/footer.php'; ?>
+<?php include '../includes/layout-totem-footer.php'; ?>

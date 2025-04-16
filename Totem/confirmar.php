@@ -1,16 +1,17 @@
 <?php
 include '../includes/db.php';
+$ocultarNavbar = true;
 include '../includes/header.php';
 
 // Verificación básica
-if (!isset($_POST['rut'], $_POST['materia_id'], $_POST['servicio_id'])) {
+if (!isset($_POST['rut'], $_POST['servicio_id'])) {
     echo "<div class='alert alert-danger'>Faltan datos necesarios.</div>";
     exit;
 }
 
 $rut = $_POST['rut'];
-$materia_id = $_POST['materia_id'];
 $servicio_id = $_POST['servicio_id'];
+$materia_id = $_POST['materia_id'] ?? null;
 
 // Buscar o insertar cliente
 $stmt = $pdo->prepare("SELECT id FROM clientes WHERE rut = ?");
@@ -44,19 +45,18 @@ $result = $stmt->fetch();
 $ultimoNumero = $result['max_num'] ?? 0;
 $nuevoNumero = $ultimoNumero + 1;
 
-// Insertar turno
-$stmt = $pdo->prepare("INSERT INTO turnos (codigo_turno, cliente_id, numero_turno, servicio_id, materia_id, estado, created_at, updated_at) 
-                       VALUES (?, ?, ?, ?, ?, 'pendiente', NOW(), NOW())");
-
 $codigoTurno = $letra . str_pad($nuevoNumero, 2, '0', STR_PAD_LEFT);
 
-$stmt->execute([
-    $codigoTurno,
-    $cliente_id,
-    $nuevoNumero,
-    $servicio_id,
-    $materia_id
-]);
+// Armar el INSERT dinámicamente
+if ($materia_id) {
+    $stmt = $pdo->prepare("INSERT INTO turnos (codigo_turno, cliente_id, numero_turno, servicio_id, materia_id, estado, created_at, updated_at) 
+                           VALUES (?, ?, ?, ?, ?, 'pendiente', NOW(), NOW())");
+    $stmt->execute([$codigoTurno, $cliente_id, $nuevoNumero, $servicio_id, $materia_id]);
+} else {
+    $stmt = $pdo->prepare("INSERT INTO turnos (codigo_turno, cliente_id, numero_turno, servicio_id, estado, created_at, updated_at) 
+                           VALUES (?, ?, ?, ?, 'pendiente', NOW(), NOW())");
+    $stmt->execute([$codigoTurno, $cliente_id, $nuevoNumero, $servicio_id]);
+}
 ?>
 
 <div class="container text-center mt-5">

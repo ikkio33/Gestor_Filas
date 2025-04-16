@@ -73,32 +73,32 @@ foreach ($materias as $materia) {
 ?>
 
 <div class="container mt-4">
-    <h1>Organizador de Servicios y Materias</h1>
+    <h1 class="text-center mb-4">Organizador de Servicios y Materias</h1>
 
-    <div class="row">
+    <div class="row mb-4">
         <!-- Formulario crear nuevo servicio -->
-        <div class="col-md-6">
-            <form method="POST" class="mb-3 d-flex gap-2">
+        <div class="col-12 col-md-6 offset-md-3">
+            <form method="POST" class="d-flex gap-2">
                 <input type="text" name="nuevo_servicio" class="form-control" placeholder="Nuevo servicio" required>
-                <button type="submit" name="crear_servicio" class="btn btn-success">Agregar Servicio</button>
+                <button type="submit" name="crear_servicio" class="btn btn-outline-primary">Agregar Servicio</button>
             </form>
         </div>
     </div>
 
     <div class="row">
         <?php foreach ($servicios as $servicio): ?>
-            <div class="col-md-4">
-                <div class="card mb-4">
-                    <div class="card-header d-flex justify-content-between align-items-center">
+            <div class="col-12 col-md-4 mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
                         <strong><?= htmlspecialchars($servicio['nombre']) ?> (<?= $servicio['letra'] ?>)</strong>
-                        <a href="?eliminar_servicio=<?= $servicio['id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('¿Eliminar este servicio?')">Eliminar</a>
+                        <a href="?eliminar_servicio=<?= $servicio['id'] ?>" class="btn btn-outline-light btn-sm" onclick="return confirm('¿Eliminar este servicio?')">Eliminar</a>
                     </div>
                     <div class="card-body">
                         <!-- Form crear materia -->
-                        <form method="POST" class="d-flex mb-2 gap-2">
+                        <form method="POST" class="d-flex mb-3 gap-2">
                             <input type="hidden" name="servicio_id" value="<?= $servicio['id'] ?>">
                             <input type="text" name="nuevo_materia" class="form-control" placeholder="Nueva materia" required>
-                            <button type="submit" class="btn btn-primary">Agregar</button>
+                            <button type="submit" class="btn btn-outline-primary">Agregar</button>
                         </form>
 
                         <ul class="list-group" id="servicio-<?= $servicio['id'] ?>" ondrop="drop(event)" ondragover="allowDrop(event)">
@@ -106,7 +106,7 @@ foreach ($materias as $materia) {
                                 <?php foreach ($materiasPorServicio[$servicio['id']] as $materia): ?>
                                     <li class="list-group-item d-flex justify-content-between align-items-center" draggable="true" ondragstart="drag(event)" id="materia-<?= $materia['id'] ?>">
                                         <?= htmlspecialchars($materia['nombre']) ?>
-                                        <a href="?eliminar_materia=<?= $materia['id'] ?>" class="btn btn-sm btn-outline-danger" onclick="return confirm('¿Eliminar esta materia?')">x</a>
+                                        <a href="?eliminar_materia=<?= $materia['id'] ?>" class="btn btn-outline-danger btn-sm" onclick="return confirm('¿Eliminar esta materia?')">x</a>
                                     </li>
                                 <?php endforeach; ?>
                             <?php else: ?>
@@ -142,14 +142,26 @@ foreach ($materias as $materia) {
             const nuevoServicioId = targetList.id.split("-")[1];
 
             fetch('actualizar_materia.php', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ materia_id: materiaId, servicio_id: nuevoServicioId })
-            }).then(res => res.json()).then(data => {
-                if (!data.success) alert('Error al actualizar');
-            }).catch(() => alert('Fallo en la petición'));
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ materia_id: materiaId, servicio_id: nuevoServicioId })
+})
+.then(response => {
+    if (!response.ok) {
+        throw new Error(`Error HTTP: ${response.status}`);
+    }
+    return response.json();
+})
+.then(data => {
+    if (!data.success) {
+        throw new Error('Error en la actualización de la materia');
+    }
+    // Actualización exitosa, puedes agregar lógica adicional aquí
+})
+.catch(error => {
+    console.error('Error al actualizar la materia:', error);
+    alert('Hubo un problema al actualizar la materia. Por favor, inténtalo nuevamente.');
+});
         }
     }
-</script>
-
-<?php include '../../includes/footer.php'; ?>
+</script>       

@@ -23,9 +23,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nombre = $_POST['nombre'];
     $email = $_POST['email'];
     $rol = $_POST['rol'];
+    $nuevaPassword = trim($_POST['password']);
 
-    $update = $pdo->prepare("UPDATE usuarios SET nombre = ?, email = ?, rol = ? WHERE id = ?");
-    $update->execute([$nombre, $email, $rol, $id]);
+    if (!empty($nuevaPassword)) {
+        $hash = password_hash($nuevaPassword, PASSWORD_DEFAULT);
+        $update = $pdo->prepare("UPDATE usuarios SET nombre = ?, email = ?, rol = ?, password = ? WHERE id = ?");
+        $update->execute([$nombre, $email, $rol, $hash, $id]);
+    } else {
+        $update = $pdo->prepare("UPDATE usuarios SET nombre = ?, email = ?, rol = ? WHERE id = ?");
+        $update->execute([$nombre, $email, $rol, $id]);
+    }
 
     header("Location: index.php");
     exit;
@@ -49,6 +56,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <option value="Funcionario" <?= $usuario['rol'] == 'Funcionario' ? 'selected' : '' ?>>Funcionario</option>
                 <option value="Administrador" <?= $usuario['rol'] == 'Administrador' ? 'selected' : '' ?>>Administrador</option>
             </select>
+        </div>
+        <div class="mb-3">
+            <label>Nueva Contraseña (opcional)</label>
+            <input type="password" name="password" class="form-control" placeholder="Dejar en blanco para no cambiar">
         </div>
         <button type="submit" class="btn btn-primary">Guardar Cambios</button>
         <a href="index.php" class="btn btn-secondary">Cancelar</a>

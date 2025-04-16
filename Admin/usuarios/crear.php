@@ -9,14 +9,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nombre = trim($_POST['nombre']);
     $email = trim($_POST['email']);
     $rol = trim($_POST['rol']);
+    $password = trim($_POST['password']);
 
     if (empty($nombre)) $errores[] = "El nombre es obligatorio.";
     if (empty($email)) $errores[] = "El email es obligatorio.";
     if (empty($rol)) $errores[] = "El rol es obligatorio.";
+    if (empty($password)) $errores[] = "La contraseña es obligatoria.";
+    elseif (strlen($password) < 6) $errores[] = "La contraseña debe tener al menos 6 caracteres.";
 
     if (empty($errores)) {
-        $stmt = $pdo->prepare("INSERT INTO usuarios (nombre, email, rol) VALUES (?, ?, ?)");
-        $stmt->execute([$nombre, $email, $rol]);
+        $hash = password_hash($password, PASSWORD_DEFAULT);
+        $stmt = $pdo->prepare("INSERT INTO usuarios (nombre, email, rol, password) VALUES (?, ?, ?, ?)");
+        $stmt->execute([$nombre, $email, $rol, $hash]);
         header("Location: index.php");
         exit;
     }
@@ -54,6 +58,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <option value="admin">Administrador</option>
                 <option value="empleado">Funcionario</option>
             </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="password" class="form-label">Contraseña</label>
+            <input type="password" name="password" id="password" class="form-control" required minlength="6">
         </div>
 
         <button type="submit" class="btn btn-primary">Guardar Usuario</button>

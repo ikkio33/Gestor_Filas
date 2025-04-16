@@ -1,44 +1,184 @@
-body {
-    font-family: Arial, sans-serif;
+/* Paleta de colores */
+:root {
+    --primary-color: #2a579a;
+    --primary-hover: #1e4378;
+    --light-gray: #f8f9fa;
+    --medium-gray: #dee2e6;
+    --dark-gray: #343a40;
+    --white: #ffffff;
+    --secondary-color: #6c757d;
+    --warning-color: #ffc107;
 }
 
-nav ul {
-    list-style: none;
+/* Tipografía */
+body {
+    font-family: 'Roboto', Arial, sans-serif;
+    font-size: 16px;
+    background-color: var(--light-gray);
+    color: var(--dark-gray);
+    margin: 0;
     padding: 0;
 }
 
-nav ul li {
-    display: inline;
-    margin-right: 20px;
-}
-
-table {
+/* Encabezado */
+header {
+    background-color: var(--white);
+    border-bottom: 1px solid var(--medium-gray);
+    padding: 1rem;
+    position: fixed;
     width: 100%;
-    border-collapse: collapse;
+    top: 0;
+    z-index: 1000;
 }
 
-table,
-th,
-td {
-    border: 1px solid #ddd;
+/* Contenedor principal */
+.container {
+    max-width: 1200px;
+    margin: 80px auto 0 auto; /* Ajusta el margen superior según la altura del header */
+    padding: 1rem;
 }
 
-th,
-td {
-    padding: 8px;
-    text-align: left;
-}
-/**/
-.servicio-dropzone {
-    min-height: 150px;
-    transition: background-color 0.2s ease;
+/* Tarjetas de turnos */
+.turno {
+    background-color: var(--white);
+    border: 1px solid var(--medium-gray);
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: 1rem;
+    margin: 0.5rem;
+    flex: 1 1 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
 }
 
-.servicio-dropzone.over {
-    background-color: #e3f2fd;
-    border: 2px dashed #2196f3;
+/* Botones */
+button {
+    background-color: var(--primary-color);
+    color: var(--white);
+    border: none;
+    border-radius: 4px;
+    padding: 0.75rem 1.5rem;
+    font-size: 1.25rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
-.list-group-item[draggable="true"] {
-    cursor: move;
+button:hover {
+    background-color: var(--primary-hover);
+}
+
+.btn-outline-primary {
+    background-color: transparent;
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--primary-color);
+    color: var(--white);
+}
+
+.btn-outline-warning {
+    background-color: transparent;
+    color: var(--warning-color);
+    border: 2px solid var(--warning-color);
+}
+
+.btn-outline-warning:hover {
+    background-color: var(--warning-color);
+    color: var(--white);
+}
+
+/* Botonera en tres columnas */
+.button-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.button-grid button {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1.5rem;
+}
+
+/* Estilos adicionales */
+.navbar {
+    margin-bottom: 2rem;
+}
+
+.navbar-brand {
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.nav-link {
+    font-size: 1.1rem;
+}
+
+.card {
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.card-header {
+    background-color: var(--primary-color);
+    color: var(--white);
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+.card-body {
+    padding: 1rem;
+}
+
+.text-muted {
+    color: var(--secondary-color) !important;
+}
+
+.text-center {
+    text-align: center !important;
+}
+
+.mt-5 {
+    margin-top: 3rem !important;
+}
+
+.mb-4 {
+    margin-bottom: 1.5rem !important;
+}
+
+.mb-2 {
+    margin-bottom: 0.5rem !important;
+}
+
+.m-1 {
+    margin: 0.25rem !important;
+}
+
+.p-1 {
+    padding: 0.25rem !important;
+}
+
+.w-100 {
+    width: 100% !important;
+}
+
+/* Asegurar que los turnos se acomoden bien en pantallas más pequeñas */
+@media (max-width: 768px) {
+    .button-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 576px) {
+    .button-grid {
+        grid-template-columns: 1fr;
+    }
 }

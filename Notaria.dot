@@ -1,0 +1,18 @@
+digraph notaria_db {
+    node [shape=record, style=filled, fillcolor=lightgray];
+
+    clientes [label="{clientes|id\l nombre\l rut\l}"];
+    usuarios [label="{usuarios|id\l nombre\l rol\l}"];
+    servicios [label="{servicios|id\l nombre\l letra\l}"];
+    materias [label="{materias|id\l nombre\l servicio_id\l}"];
+    mesones [label="{mesones|id\l nombre\l disponible\l servicio_id\l usuario_id\l}"];
+    turnos [label="{turnos|id\l cliente_id\l materia_id\l meson_id\l estado\l}"];
+
+    // Relaciones
+    materias -> servicios [label="pertenece a"];
+    turnos -> clientes [label="solicitado por"];
+    turnos -> materias [label="asociado a"];
+    turnos -> mesones [label="atendido en"];
+    mesones -> servicios [label="asociado a"];
+    mesones -> usuarios [label="atendido por"];
+}
