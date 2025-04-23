@@ -1,6 +1,6 @@
 <?php
 // includes/header.php
-session_start(); // Asegúrate de tener esto al inicio
+// El session_start() debe ser llamado en el archivo donde se maneje el inicio de sesión, no en el header.php.
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -45,7 +45,7 @@ session_start(); // Asegúrate de tener esto al inicio
 <?php if ((!isset($ocultarNavbar) || !$ocultarNavbar) && isset($_SESSION['usuario_id'])): ?>
 <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="/Notaria/login.php">Mi Notaría</a>
+        <a class="navbar-brand" href="#">Mi Notaría</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -53,10 +53,7 @@ session_start(); // Asegúrate de tener esto al inicio
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav me-auto">
 
-                <!-- Siempre visible -->
-                <li class="nav-item active">
-                    <a class="nav-link" href="/Notaria/dashboard/dashboard.php"><i class="fas fa-home"></i> Dashboard</a>
-                </li>
+        
 
                 <!-- Solo para administradores y superiores -->
                 <?php if (isset($_SESSION['rol']) && strtolower($_SESSION['rol']) !== 'funcionario'): ?>
@@ -71,6 +68,20 @@ session_start(); // Asegúrate de tener esto al inicio
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/Notaria/Admin/Meson/index.php"><i class="fas fa-desktop"></i> Mesón</a>
+                    </li>
+                <?php else: ?>
+                    <!-- Mostrar enlaces deshabilitados para el usuario 'funcionario' -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" style="pointer-events: none; color: gray;" title="No tiene acceso a esta sección"><i class="fas fa-users-cog"></i> Usuarios</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" style="pointer-events: none; color: gray;" title="No tiene acceso a esta sección"><i class="fas fa-layer-group"></i> Servicios</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" style="pointer-events: none; color: gray;" title="No tiene acceso a esta sección"><i class="fas fa-ticket-alt"></i> Turnos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" style="pointer-events: none; color: gray;" title="No tiene acceso a esta sección"><i class="fas fa-desktop"></i> Mesón</a>
                     </li>
                 <?php endif; ?>
             </ul>
@@ -89,3 +100,5 @@ session_start(); // Asegúrate de tener esto al inicio
 <!-- Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,5 +1,9 @@
 <?php
-// admin/usuarios/index.php
+// Incluir auth.php para que las funciones estén disponibles
+require_once '../../Includes/auth.php';  // Asegúrate de que la ruta sea correcta
+
+// Verificación de acceso para administradores
+requiereRol('administrador');
 
 include '../../includes/header.php';
 include '../../includes/db.php';
@@ -7,7 +11,7 @@ include '../../includes/db.php';
 // Obtener todos los usuarios
 $query = "SELECT * FROM usuarios";
 $stmt = $pdo->query($query);
-$usuarios = $stmt->fetchAll();
+$usuarios = $stmt->fetchAll(); #fetchAll(PDO::FETCH_OBJ)
 
 // Comprobar si se ha solicitado verificar una contraseña
 if (isset($_GET['verificar_id'])) {

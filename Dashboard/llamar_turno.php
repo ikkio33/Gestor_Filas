@@ -14,15 +14,26 @@ if (isset($_POST['turno_id'], $_POST['meson_id'])) {
         exit;
     }
 
-    // Llamar al turno (actualizar estado y mesón)
-    $stmt = $pdo->prepare("UPDATE turnos SET estado = 'atendiendo', meson_id = ?, updated_at = NOW() WHERE id = ?");
-    $stmt->execute([$meson_id, $turno_id]);
+    // Verificar que el turno exista y esté pendiente
+    $stmt = $pdo->prepare("SELECT * FROM turnos WHERE id = ? AND estado = 'pendiente'");
+    $stmt->execute([$turno_id]);
+    $turno = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    header("Location: dashboard.php?meson_id=$meson_id");
+    if (!$turno) {
+        header("Location: dashboard.php?meson_id=$meson_id&error=no_encontrado");
+        exit;
+    }
+
+    // Actualizar estado del turno a 'atendiendo'
+    $stmt = $pdo->prepare("UPDATE turnos SET estado = 'atendiendo', meson_id = ?, updated_at = NOW() WHERE id = ?");
+    if (!$stmt->execute([$meson_id, $turno_id])) {
+        header("Location: dashboard.php?meson_id=$meson_id&error=fallo_update");
+        exit;
+    }
+
+    header("Location: dashboard.php?meson_id=$meson_id&turno_llamado=$turno_id");
     exit;
 }
 
-// Al final de llamar_turno.php
-header("Location: dashboard.php?meson_id=$meson_id&turno_llamado=$turno_id");
-
+header("Location: dashboard.php?error=faltan_datos");
 ?>

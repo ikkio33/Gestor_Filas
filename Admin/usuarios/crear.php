@@ -1,7 +1,26 @@
 <?php
+require_once __DIR__ . '/../../Config/config.php';
+session_start();
+
+// Verificar que el usuario ha iniciado sesión
+if (!isset($_SESSION['usuario_id']) || $_SESSION['rol'] !== 'Administrador') {
+    // Redirigir o mostrar error
+    header('HTTP/1.1 403 Forbidden');
+    exit('Acceso no autorizado: esta sección es solo para administradores.');
+}
+
+
+if (!defined('ACCESO_PERMITIDO')) {
+    // Opcional: redirigir o mostrar error
+    header('Location: //'); // O muestra un error 403
+    exit('Acceso no autorizado');
+}
+
 // Admin/usuarios/crear.php
 include '../../includes/header.php';
 include '../../includes/db.php';
+
+
 
 // Manejo del formulario
 $errores = [];

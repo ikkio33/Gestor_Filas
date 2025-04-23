@@ -1,6 +1,13 @@
 <?php
+// Incluir auth.php para que las funciones estén disponibles
+require_once '../../Includes/auth.php';  // Asegúrate de que la ruta sea correcta
+
+// Verificación de acceso para administradores
+requiereRol('administrador');
+
 require '../../Includes/db.php';
 include '../../Includes/header.php';
+
 
 // Parámetros de filtro
 $disponibleFiltro = isset($_GET['disponible']) ? $_GET['disponible'] : '';

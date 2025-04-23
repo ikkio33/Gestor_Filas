@@ -1,6 +1,13 @@
 <?php
+// Incluir auth.php para que las funciones estén disponibles
+require_once '../../Includes/auth.php';  // Asegúrate de que la ruta sea correcta
+
+// Verificación de acceso para administradores
+requiereRol('administrador');
+
 include '../../includes/header.php';
 include '../../includes/db.php';
+//require_once 'config.php';
 
 // Crear Servicio
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['crear_servicio'])) {

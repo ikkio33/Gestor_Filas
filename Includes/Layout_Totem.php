@@ -4,6 +4,7 @@ if (!isset($titulo)) $titulo = "Tótem Notarial";
 ?>
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <title><?= htmlspecialchars($titulo) ?></title>
@@ -14,26 +15,44 @@ if (!isset($titulo)) $titulo = "Tótem Notarial";
             background-color: #f8f9fa;
             font-size: 1.2rem;
         }
+
         .touch-keyboard {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 1rem;
         }
+
         .touch-keyboard button {
             padding: 1.5rem;
             font-size: 2rem;
             touch-action: manipulation;
         }
-        input[type="text"], input[type="number"], input[type="password"] {
+
+        input[type="text"],
+        input[type="number"],
+        input[type="password"] {
             font-size: 2rem !important;
             text-align: center;
             touch-action: manipulation;
         }
-        button, .btn {
+
+        button,
+        .btn {
             touch-action: manipulation;
+        }
+
+        .rounded-pill {
+            border-radius: 50rem !important;
+            transition: all 0.3s ease;
+        }
+
+        .rounded-pill:hover {
+            background-color: #f1f1f1;
+            transform: scale(1.01);
         }
     </style>
 </head>
+
 <body>
 
-<div class="container py-4">
+    <div class="container py-4">

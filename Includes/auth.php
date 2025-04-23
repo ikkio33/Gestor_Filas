@@ -15,8 +15,8 @@ function requiereLogin() {
 function requiereRol($rol) {
     requiereLogin();
 
-    if (!isset($_SESSION['rol']) || $_SESSION['rol'] !== $rol) {
-        echo "Acceso denegado. Se requiere rol: $rol";
-        exit;
+    if (!isset($_SESSION['rol']) || strtolower($_SESSION['rol']) !== strtolower($rol)) {
+        header('HTTP/1.1 403 Forbidden');
+        exit('Acceso no autorizado: esta sección es solo para administradores.');
     }
 }

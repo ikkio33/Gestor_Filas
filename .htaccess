@@ -1,0 +1,11 @@
+    RewriteEngine On
+
+    # Evita que se vean archivos de carpetas internas por URL
+    RewriteCond %{THE_REQUEST} ^[A-Z]{3,}\s/(Admin|includes|Config|vendor|totem/includes) [NC]
+    RewriteCond %{REQUEST_URI} !/totem/index\.php$ [NC]
+    RewriteCond %{REQUEST_URI} !/vista\.php$ [NC]
+    RewriteCond %{REQUEST_URI} !/login\.php$ [NC]
+    RewriteRule ^ - [F]
+
+    # Redirige '/' a login.php si no hay otra cosa
+    DirectoryIndex login.php
