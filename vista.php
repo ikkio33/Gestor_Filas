@@ -121,10 +121,8 @@ if ($codigo_turno_actual) {
 <?php endif; ?>
 
 <script>
-    // Recarga la página cada 2 segundos
     setInterval(() => location.reload(), 2000);
 
-    // Intenta poner en pantalla completa automáticamente
     document.addEventListener('DOMContentLoaded', () => {
         const pantalla = document.documentElement;
         if (pantalla.requestFullscreen) {
@@ -136,13 +134,6 @@ if ($codigo_turno_actual) {
         }
     });
 
-    // AQUÍ podrías usar WebSocket en lugar de recargar (futuro upgrade)
-    // Ejemplo de idea:
-    // const socket = new WebSocket("ws://localhost:3000");
-    // socket.onmessage = (event) => {
-    //     const data = JSON.parse(event.data);
-    //     // actualizar DOM dinámicamente sin recargar
-    // };
 </script>
 
 <?php include '../Notaria/includes/footer.php'; ?>
